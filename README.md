@@ -70,7 +70,7 @@ Visualises the results of Blobtools and CONCOCT in order to merge bins belonging
 
 ### 3.3 Orthology inference
 `cd annotation_orthology/orthology`
-1. `cp *_CONCOCT_genes_masked/predict_results/*proteins.fa formatted_proteomes_45T` copies all predicted proteomes to a new directory called `formatted_proteomes_45T`
+1. `cp *_CONCOCT_genes_masked/predict_results/*proteins.fa formatted_proteomes_117T` copies all predicted proteomes to a new directory called `formatted_proteomes_117T`
 2. `qsub orthofinder.sh` runs orthology inference using [OrthoFinder](https://github.com/davidemms/OrthoFinder)
 
 ## 4. Phylogenomics
