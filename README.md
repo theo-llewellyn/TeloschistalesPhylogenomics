@@ -38,6 +38,7 @@ The following steps filter the metagenome to retrieve only the contigs belonging
 
 ## 5. IQTree 552 taxon multilocus tree with genome-tree as constraint
 `cd IQTree552T_tree`
+
 The following code allows you to pull 7 marker genes from a wole genome dataset, combine with marker gene datasets and then make a phylogeny constrained to whole genome tree. The steps to obtain concatenated 7-locus phylogeny and individual gene trees for the 552T dataset are as follows:
 
 1. pull marker genes 
@@ -48,3 +49,12 @@ The following code allows you to pull 7 marker genes from a wole genome dataset,
 6. run ML IQTRee of 552T marker gene dataset with 84T genome tree as a constraint. This is dont for both trimmed and untrimmed alignments
 7. make gene trees for each marker
 
+## 6. MCMCTree 84 taxon whole-genome tree time-calibration
+`cd MCMCTree_84T_genome`
+
+The following codes time-calibrates the 84 taxon RAxML tree using MCMCTree and the approximate likelihood approach
+1. Calibrate nodes
+2. Estimate marginal likelihood of relaxed clock model
+3. Calculate gradient and Hessian
+4. run MCMCTreee
+5. Fit Skew-T distribution to mean posterior estimates
