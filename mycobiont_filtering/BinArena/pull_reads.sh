@@ -1,10 +1,8 @@
 #PBS -l walltime=24:00:00
 #PBS -l select=1:ncpus=16:mem=124gb
-#PBS -J 1-83
 
 #get name of contigs file
-ACCESSION=$(head -n $PBS_ARRAY_INDEX /rds/general/user/tbl19/home/macrogen_2022_genomes.txt|tail -n 1)
-
+ACCESSION=ACCESSION
 module load anaconda3/personal
 source activate seqkit-env
 
