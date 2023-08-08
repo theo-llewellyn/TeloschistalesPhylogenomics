@@ -26,7 +26,7 @@ The following steps filter the metagenome to retrieve only the contigs belonging
 2. Gene prediction with funannotate
 3. Orthology inference with Orthfinder
 
-## 4. RAxML 83 taxon genome-scale phylogenetic tree
+## 4. RAxML 84 taxon genome-scale phylogenetic tree
 `cd raxml84T_tree`
 1. Orthogroup filtering
 2. Protein alignment
@@ -35,4 +35,16 @@ The following steps filter the metagenome to retrieve only the contigs belonging
 5. Make gene trees
 6. Filter gene trees
 7. Make species tree
+
+## 5. IQTree 552 taxon multilocus tree with genome-tree as constraint
+`cd IQTree552T_tree`
+The following code allows you to pull 7 marker genes from a wole genome dataset, combine with marker gene datasets and then make a phylogeny constrained to whole genome tree. The steps to obtain concatenated 7-locus phylogeny and individual gene trees for the 552T dataset are as follows:
+
+1. pull marker genes 
+2. Blast them on ncbi to ID and check top hit is Teloschistales
+3. concatenate markers pulled from genomes with bigger marker gene dataset with a simple cat command
+4. align marker gene multifastas with muscle5 and trim with TrimAL
+5. `qsub modeltest-ng.sh` choose the best substitution model using modeltest-ng and the AIC results
+6. run ML IQTRee of 552T marker gene dataset with 84T genome tree as a constraint. This is dont for both trimmed and untrimmed alignments
+7. make gene trees for each marker
 
