@@ -76,24 +76,15 @@ Visualises the results of Blobtools and CONCOCT in order to merge bins belonging
 ## 4. RAxML 83 taxon genome-scale phylogenetic tree
 The first step is to infer a genome-scale species tree for the 83 taxon Teloschistales dataset
 `cd raxml83T_tree`
-1. `Rscript Orthogroups_10sp.R` uses the `Orthogroups.GeneCount.tsv` file from OrthoFinder to extract a list of single copy orthologues present in at least 10 taxa
-2. `qsub extract_50_orthogroups.sh` pull 50% orthogroups and copy to new directory
-3. `qsub mafft_trimAL_loop.sh` uses [MAFFT](https://mafft.cbrc.jp/alignment/software/) to align each orthogroup and [TrimAl](http://trimal.cgenomics.org/) to remove ambiguous regions, script also removes trailing information on protein headers so that only the species name remains. This is needed in order for tree building tools to recognise which sequences belong to the same genome
-5. `qsub iqtree.sh` produces a concatenated maximum likelihood tree from all orthgroups alignments and also individual orthogroup 'gene trees' for each orthogroup separately using [IQ-Tree](https://github.com/iqtree/iqtree2)
+1. `Rscript Orthogroups_10sp.R` uses the `Orthogroups.GeneCount.tsv` file from OrthoFinder to filter genomes with <5% duplicated BUSCOs and >70% Complete single copy BUSCOs and then extracts a list of single copy orthologues present in at least 10 taxa
+2. `qsub pull_Telos_seqs.sh` pull orthogroups for Teloschistales genomes and copy to new directory
+3. `qsub pull_CDS.sh` pull CDS sequences
+4. `qsub check_markers.sh` check none of the marker genes are in the orthogroups
+5. `qsub muscle5.sh` align proteins with MUSCLE5 [Muscle5]([https://mafft.cbrc.jp/alignment/software/](https://github.com/rcedgar/muscle))
+6. `qsub pal2nal.sh` convert to nucleotides using PAL2NAL
+7. `qsub partition_alignment.sh` split alignment into two partitions (1st and 2nd codons) and (3rd codons)
+8. `qsub raxml_genetrees.sh` make gene trees
+9. Remove genes with outlier long branches and order from slow to fast as in Alvarez-Carretero et al 2022. Submit the following scripts: `00_Filtering_genes.sh`, `00_Get_filtered_genes_in_dir.R`, `01.1_Get_data_for_baseml.sh`, `01.1_Get_data_for_baseml_partitioned.sh`, `01.2_Get_mouse_human_aln.sh`, `01_Analysis_filtered_genes.R`, `03_Concatenate_genes_separated_for_partition.sh`, `fasta-phylip-partitions.sh`
+10. `raxml84T_speciestree.sh` run raxml on the concatenated alignment with 4 partitions of slow to fast evolving genes using GTRGAMMA model
 
-## 5. Selection analysis
-`cd selection_analysis`
-The following scripts pull the genes of interest from the genomes and perform selection analysis to test to positive selection in the _Teloschistales_. The scripts are for the Hsp90 gene but are the same for all three genes
-
-1. `qsub pull_gene.sh` Pull gene of interest if know it already or do a BlastP against predicted proteins using a query
-2. `qsub muscle5.sh` Align with MUSCLE5
-3. `qsub pull_CDS.sh` pull the CDS regions for those sequences
-4. `qsub pal2nal.sh` run PAL2NAL using the aligned AA and unaligned CDSs to get aligned CDSs for CODEML
-5. Manually inspect the alignment for strange things and replace the terminal gaps for ?. Check if there are any sequences that were split into two and merge if they are identical at overlapping regions. Save as GENE_Leca118T_muscle5_msa_codon_trimmed_renamed.fa
-6. `qsub format_species_tree.sh` root with pxrr and remove branch lengths and support values
-7. `qsub edit_protein_headers.sh` edit fasta headers in gene alignment so they just contain name of taxon
-8. `qsub Drop_tips_PAML.R` drop tips from species tree that arent in gene alignments
-9. Label Teloschistaceae branch with '#1'
-10. `qsub codeml.sh` Selection analysis with PAML. We will test null and alternative models for both branch and branchsite models using Teloschistaceae as the foreground branch. Therefore we have four analysis per gene. A template directory (TEMPLATE) is included which can be used for all genes replacing the name of the alignment and species tree in the .ctl files. All four models can then be run. Remember to make a new copy of TEMPLATE for each gene to avoid overwriting outputs.
-11. likelihood ratio test to compare the null and the alternative models: M0 vs branch & branch-site null vs. branch. Calculate t-test statistic: 2 x (log likelihood branch model - log likelihood M0), df = 1, chi2: `paml4.9j/bin/chi2 1 LRT`
 
