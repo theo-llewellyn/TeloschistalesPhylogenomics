@@ -93,5 +93,6 @@ The following scripts pull the genes of interest from the genomes and perform se
 7. `qsub edit_protein_headers.sh` edit fasta headers in gene alignment so they just contain name of taxon
 8. `qsub Drop_tips_PAML.R` drop tips from species tree that arent in gene alignments
 9. Label Teloschistaceae branch with '#1'
-10. `qsub codeml.sh` Selection analysis with PAML. We will test null and alternative models for both branch and branchsite models using Teloschistaceae as the foreground branch. Therefore we have four analysis per gene. A template directory is shown which can be used for all genes replacing the name of the alignment and species tree in the .ctl files. All four models can then be run
+10. `qsub codeml.sh` Selection analysis with PAML. We will test null and alternative models for both branch and branchsite models using Teloschistaceae as the foreground branch. Therefore we have four analysis per gene. A template directory (TEMPLATE) is included which can be used for all genes replacing the name of the alignment and species tree in the .ctl files. All four models can then be run. Remember to make a new copy of TEMPLATE for each gene to avoid overwriting outputs.
+11. likelihood ratio test to compare the null and the alternative models: M0 vs branch & branch-site null vs. branch. Calculate t-test statistic: 2 x (log likelihood branch model - log likelihood M0), df = 1, chi2: `paml4.9j/bin/chi2 1 LRT`
 
