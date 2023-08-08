@@ -44,7 +44,7 @@ Visualises the results of Blobtools and CONCOCT in order to merge bins belonging
 1. `qsub make_binarena_tsv.sh` extract gc and coverage from Blobtools output and concoct bins and saves into tsv
 2. Open this file in BinArena using the settings x=gc , y=cov to 4rt, colour=tax
 3. `qsub seqkit_array.sh` pull contigs using headers
-4. `qsub XXX` filter blobtools input for filtered concoct contigs
+4. `qsub filter_BlobTools.sh` filter blobtools input for filtered concoct contigs
 
 ### 2.4 Blobtools (round 2)
 `cd mycobiont_filtering/BlobTools_round2`
