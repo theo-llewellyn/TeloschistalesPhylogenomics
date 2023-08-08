@@ -73,9 +73,10 @@ Visualises the results of Blobtools and CONCOCT in order to merge bins belonging
 1. `cp *_CONCOCT_genes_masked/predict_results/*proteins.fa formatted_proteomes_117T` copies all predicted proteomes to a new directory called `formatted_proteomes_117T`
 2. `qsub orthofinder.sh` runs orthology inference using [OrthoFinder](https://github.com/davidemms/OrthoFinder)
 
-## 4. Phylogenomics
-`cd phylogenomcis`
-1. `Rscript Orthogroups_50percent.R` uses the `Orthogroups.GeneCount.tsv` file from OrthoFinder to extract a list of single copy orthologues present in at least 50% of taxa
+## 4. RAxML 83 taxon genome-scale phylogenetic tree
+The first step is to infer a genome-scale species tree for the 83 taxon Teloschistales dataset
+`cd raxml83T_tree`
+1. `Rscript Orthogroups_10sp.R` uses the `Orthogroups.GeneCount.tsv` file from OrthoFinder to extract a list of single copy orthologues present in at least 10 taxa
 2. `qsub extract_50_orthogroups.sh` pull 50% orthogroups and copy to new directory
 3. `qsub mafft_trimAL_loop.sh` uses [MAFFT](https://mafft.cbrc.jp/alignment/software/) to align each orthogroup and [TrimAl](http://trimal.cgenomics.org/) to remove ambiguous regions, script also removes trailing information on protein headers so that only the species name remains. This is needed in order for tree building tools to recognise which sequences belong to the same genome
 5. `qsub iqtree.sh` produces a concatenated maximum likelihood tree from all orthgroups alignments and also individual orthogroup 'gene trees' for each orthogroup separately using [IQ-Tree](https://github.com/iqtree/iqtree2)
