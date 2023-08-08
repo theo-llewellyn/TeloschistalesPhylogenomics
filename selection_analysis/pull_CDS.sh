@@ -8,7 +8,7 @@ cat Xanpa2_GeneCatalog_CDS_20140928.fasta | awk '/^>/{print ">Xanthoria_parietin
 cat Clagr3_GeneCatalog_CDS_20111121.fasta | awk '/^>/{print ">Cladonia_grayi_prot" ++i; next}{print}' > Clagr3_GeneCatalog_CDS_20111121.renamed.fa
 
 #copy all CDS to new directory and cat into a single file
-cat *cds* > Leca118T_CDS_all.fa
+cat *cds* > Leca117T_CDS_all.fa
 
 #take the headers of the guidance filtered alignment
-cat CDS/Leca118T_CDS_all.fa | seqkit grep -f Hsp90_headers.txt > Hsp90_CDS_Leca118T.fa
+cat CDS/Leca117T_CDS_all.fa | seqkit grep -f Hsp90_headers.txt > Hsp90_CDS_Leca117T.fa
