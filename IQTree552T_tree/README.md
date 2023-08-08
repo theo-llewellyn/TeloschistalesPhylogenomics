@@ -1,4 +1,4 @@
-# Multilocus tree 552T 84T backbone
+## 5. Multilocus tree 552T 84T backbone
 
 The following code allows you to pull 7 marker genes from a wole genome dataset, combine with marker gene datasets and then make a phylogeny constrained to whole genome tree. The steps to obtain concatenated 7-locus phylogeny and individual gene trees for the 553T dataset are as follows:
 
