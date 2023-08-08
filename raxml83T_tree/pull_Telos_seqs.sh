@@ -1,3 +1,6 @@
+#!/bin/bash
+# Filters orthogroups for just Teloschistales sequences. Requires file Telos85T.txt with list of Teloschistales accessions
+
 mkdir Single_Copy_Orthologues_50percent
 #search for orthogroup headers and save into new directory
 cat Orthologues_Telos85T_dup_comp_10sp.txt | while read line; do cp Orthogroup_Sequences/${line}.fa Single_Copy_Orthologues_10sp; done
