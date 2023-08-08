@@ -79,11 +79,13 @@ We run 5 chains using a dummy alignment and skewT calibrated 553T tree using the
 
 `qsub MCMCTree_prior_553T.sh`
 
+As with the 84T tree we combine results of 5 chains using `Combine_MCMC.sh` script to generate a single tracer file. We run MCMCtree again on the combined data to get a tree with branch lengths (needs to be run using paml4.9j otherwise the print -1 option doesnt work).
+
 ### 3.2 Posterior
 We run it using both ILN and GBM models. First we prepare directories with `prepare_directories.sh` and the submit jobs with `MCMCTree_posterior_553T_array_ILN.sh` with `mcmctree_ILN.ctl ` for the ILN model and `MCMCTree_posterior_553T_array.sh` with `mcmctree.ctl` for the GBM model.
 
 ### 3.3 Check convergence and post. vs prior
 
-Once these have run we can combine them using `Combine_MCMC.sh` script. If we want to check ESS in Tracer we need to run a few extra commands so that the generation time is consecutive `prepare_tracer_files.sh`
+Once these have run we can combine them using `Combine_posterior_chains.sh` script. If we want to check ESS in Tracer we need to run a few extra commands so that the generation time is consecutive `prepare_tracer_files.sh`
 
 To generate the labelled tree we use mcmctree with the mcmc_tracer_gens.txt, dummy alignment and ML tree with the -1 option.
