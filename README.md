@@ -3,22 +3,13 @@ Bioinformatic scripts/code for Chapter 3: Phylogenomics and molecular systematic
 
 Scripts were run on the Imperial College London High Performance Computer or Royal Botanic Gardens Kew HPC. These HPCs use the PBS queueing system, therefore core/RAM/runtimes in .sh scripts are specified in PBS format. All scripts are written for a single genome file (replacing the word ACCESSION for the name of the sequence) but can be converted into array scripts to handle multiple genomes.
 
+The following is an overview of the main steps in the pipeline. For detailed instructions for each step see the README files in each subdirectory
+
 ## 1. Metagenome Assembly
-### 1.1 Quality assessment of Illumina reads
-Uses fastq.gz paired end Illumina raw reads. Read trimming requires `TruSeq3-PE-2.fa` for TruSeq Nano Library prep and `NexteraPE-PE.fa` for Nextera XT Library prep. Both .fa adpater files are included in trimmmotatic v0.36 within the adapters directory.  
-`cd assembly/QC`
-1. `qsub fastqc.sh` assesses raw read quality using [FastQC](https://github.com/s-andrews/FastQC)
-2. `qsub trimmomatic.sh` trims low-quality bases and adapters with [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic)
-3. `qsub fastqc_trimmed.sh` assesses read quality post-trimming
-
-### 1.2 Metagenome assembly
-`cd assembly/metagenome_assembly`
-1. `qsub megahit.sh` metagenome assembly using [MEGAHIT](https://github.com/voutcn/megahit)
-
-### 1.3 Metagenome assessment
-`cd assembly/assessment`
-1. `qsub quast.sh` assembly contiguity using [QUAST](https://github.com/ablab/quast)
-2. `qsub busco.sh` assembly completeness using [BUSCO](https://busco.ezlab.org/) and the Ascomycota dataset
+`cd assembly`
+1. Quality assessment of Illumina reads with fastqc and trimmomatic
+2. Metagenome assembly with megahit
+3. Metagenome assessment with quast and BUSCO
 
 ## 2. Mycobiont read filtering
 The following steps filter the metagenome to retrieve only the contigs belonging to the Lecanoromycete mycobiont.
