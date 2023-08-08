@@ -81,8 +81,17 @@ Visualises the results of Blobtools and CONCOCT in order to merge bins belonging
 5. `qsub iqtree.sh` produces a concatenated maximum likelihood tree from all orthgroups alignments and also individual orthogroup 'gene trees' for each orthogroup separately using [IQ-Tree](https://github.com/iqtree/iqtree2)
 
 ## 5. Selection analysis
+`cd selection_analysis`
 The following scripts pull the genes of interest from the genomes and perform selection analysis to test to positive selection in the _Teloschistales_. The scripts are for the Hsp90 gene but are the same for all three genes
 
-1. pull genes
-2. 
+1. `qsub pull_gene.sh` Pull gene of interest if know it already or do a BlastP against predicted proteins using a query
+2. `qsub muscle5.sh` Align with MUSCLE5
+3. `qsub pull_CDS.sh` pull the CDS regions for those sequences
+4. `qsub pal2nal.sh` run PAL2NAL using the aligned AA and unaligned CDSs to get aligned CDSs for CODEML
+5. Manually inspect the alignment for strange things and replace the terminal gaps for ?. Check if there are any sequences that were split into two and merge if they are identical at overlapping regions. Save as GENE_Leca118T_muscle5_msa_codon_trimmed_renamed.fa
+6. `qsub format_species_tree.sh` root with pxrr and remove branch lengths and support values
+7. `qsub edit_protein_headers.sh` edit fasta headers in gene alignment so they just contain name of taxon
+8. `qsub Drop_tips_PAML.R` drop tips from species tree that arent in gene alignments
+9. Label Teloschistaceae branch with '#1'
+10. `qsub codeml.sh` Selection analysis with PAML. We will test null and alternative models for both branch and branchsite models using Teloschistaceae as the foreground branch. Therefore we have four analysis per gene. A template directory is shown which can be used for all genes replacing the name of the alignment and species tree in the .ctl files. All four models can then be run
 
