@@ -1,7 +1,7 @@
 # *Teloschistales* Metagenomics
-Bioinformatic scripts/code for Chapter 5: Lichens have evolved suites of self-resistance mechanisms to withstand the antifungal effects of anthraquinones
+Bioinformatic scripts/code for Chapter 3: Phylogenomics and molecular systematics of the _Teloschistaceae_
 
-All scripts (except .R scripts) were run on the Imperial College London High Performance Computer. This HPC uses the PBS queueing system, therefore core/RAM/runtimes in .sh scripts are specified in PBS format. All scripts are written for a single genome file (replacing the word ACCESSION for the name of the sequence) but can be converted into array scripts to handle multiple genomes.
+Scripts were run on the Imperial College London High Performance Computer or Royal Botanic Gardens Kew HPC. These HPCs use the PBS queueing system, therefore core/RAM/runtimes in .sh scripts are specified in PBS format. All scripts are written for a single genome file (replacing the word ACCESSION for the name of the sequence) but can be converted into array scripts to handle multiple genomes.
 
 ## 1. Metagenome Assembly
 ### 1.1 Quality assessment of Illumina reads
