@@ -1,9 +1,8 @@
 #PBS -l walltime=00:30:00
 #PBS -l select=1:ncpus=1:mem=10gb
-#PBS -J 1-83
 
 #get name of contigs file
-ACCESSION=$(head -n $PBS_ARRAY_INDEX /rds/general/user/tbl19/home/macrogen_2022_genomes.txt|tail -n 1)
+ACCESSION=ACCESION_NUMBER
 
 cd $PBS_O_WORKDIR
 
