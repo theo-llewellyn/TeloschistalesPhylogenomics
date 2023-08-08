@@ -1,6 +1,6 @@
 #PBS -l walltime=02:00:00
 #PBS -l select=1:ncpus=1:mem=1gb
-#PBS -J 1-7
+#PBS -J 1-6
 
 module load blast+
 
