@@ -4,6 +4,6 @@
 cd $PBS_O_WORKDIR
 
 /rds/general/user/tbl19/home/software/pal2nal.v14.pal2nal.pl \
- /rds/general/project/theollewellynproject/live/DNA_Repair_Analysis/Hsp90_Leca118T_muscle5_msa.fa \
- /rds/general/project/theollewellynproject/live/DNA_Repair_Analysis/Hsp90_CDS_Leca118T.fa \
+ /rds/general/project/theollewellynproject/live/DNA_Repair_Analysis/Hsp90_Leca117T_muscle5_msa.fa \
+ /rds/general/project/theollewellynproject/live/DNA_Repair_Analysis/Hsp90_CDS_Leca117T.fa \
  -output fasta
