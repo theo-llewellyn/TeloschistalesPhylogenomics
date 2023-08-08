@@ -1,5 +1,5 @@
 # *Teloschistales* Metagenomics
-Bioinformatic scripts/code for [Llewellyn et al. (2023) Metagenomics shines light on the evolution of 'sunscreen' pigments in the *Teloschistales* (lichen-forming Ascomycota)](https://academic.oup.com/gbe/advance-article/doi/10.1093/gbe/evad002/6986375)
+Bioinformatic scripts/code for Chapter 5: Lichens have evolved suites of self-resistance mechanisms to withstand the antifungal effects of anthraquinones
 
 All scripts (except .R scripts) were run on the Imperial College London High Performance Computer. This HPC uses the PBS queueing system, therefore core/RAM/runtimes in .sh scripts are specified in PBS format. All scripts are written for a single genome file (replacing the word ACCESSION for the name of the sequence) but can be converted into array scripts to handle multiple genomes.
 
@@ -14,7 +14,6 @@ Uses fastq.gz paired end Illumina raw reads. Read trimming requires `TruSeq3-PE-
 ### 1.2 Metagenome assembly
 `cd assembly/metagenome_assembly`
 1. `qsub megahit.sh` metagenome assembly using [MEGAHIT](https://github.com/voutcn/megahit)
-2. `qsub metaspades.sh` metagenome assembly using [MetaSPAdes](https://github.com/ablab/spades)
 
 ### 1.3 Metagenome assessment
 `cd assembly/assessment`
@@ -38,14 +37,20 @@ Uses a DIAMOND blast of the contigs against the UniRef90 database which can be d
 1. `qsub bwa_gatk.sh` align reads to contigs using [BWA-mem](https://github.com/lh3/bwa) and convert to .bam with [GATK](https://gatk.broadinstitute.org/hc/en-us)
 2. `qsub concoct.sh` bins metagenome contigs into MAGs using [CONCOCT](https://github.com/BinPro/CONCOCT)
 3. `qsub make_cov_gc.sh` makes a coverage and gc_content file from the bbmap output to be used in the following step
-4. `Rscript concoct_mags_plot.r` visualises CONCOCT binning and BlobTools blasts to identify Ascomycota bins. Requires the 'clustering_merged.csv' file in the concoct_output
-5. `cat bin1.fa bin2.fa bin3.fa > Lecanoromycete_MAG.fa` merge potential mycobiont bins into a single file
 
-### 2.3 Blobtools (round 2)
-The `Lecanoromycete_MAG.fa` can then either be run through the steps in 2.1 using the exact same scripts but replacing the metagenome assembly for `Lecanoromycete_MAG.fa` taking care to change the output file names so as not to overwrite the first round of BlobTools. Or you can use the script 'filter_BlobTools_input.sh' to just pull the info for the filtered contigs and then BlobTools again on those files. The results can then be used to remove any remaining non-mycbiont reads as follows  
+### 2.3 BinArena
+Visualises the results of Blobtools and CONCOCT in order to merge bins belonging to mycobiont
+`cd mycobiont_filtering/BinArena`
+1. `qsub make_binarena_tsv.sh` extract gc and coverage from Blobtools output and concoct bins and saves into tsv
+2. Open this file in BinArena using the settings x=gc , y=cov to 4rt, colour=tax
+3. `qsub seqkit_array.sh` pull contigs using headers
+4. `qsub XXX` filter blobtools input for filtered concoct contigs
+
+### 2.4 Blobtools (round 2)
 `cd mycobiont_filtering/BlobTools_round2`
-1. `qsub remove_contam.sh` extracts contig headers of contigs with a top blast of Ascomycota or 'no hit'. Requires the `.bestsum.table.txt` file from BlobTools
-2. `qsub seqkit_bbmap.sh` extract contigs based on headers file from previous step using [SeqKit](https://bioinf.shenwei.me/seqkit/) and then pulls reads which map to those contigs using bbmap
+1. `qsub BlobTools_round2.sh` rerun BlobTools
+2. `qsub remove_contam.sh` remove final contaminants
+3. `qsub pull_reads.sh` pull reads
 
 ### 2.4 Mycobiont assembly cleaning
 `cd mycobiont_filtering/cleaning`
