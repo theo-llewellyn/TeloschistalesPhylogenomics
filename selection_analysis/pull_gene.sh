@@ -5,12 +5,12 @@ cat Xanpa2_GeneCatalog_proteins_20140928.aa.fasta | awk '/^>/{print ">Xanthoria_
 cat Clagr3_GeneCatalog_proteins_20111121.aa.fasta | awk '/^>/{print ">Cladonia_grayi_prot" ++i; next}{print}' > Clagr3_GeneCatalog_proteins_20111121.aa.renamed.fa
 
 #concatenate all proteins into a single file
-cat *.fa > Leca118T_proteins.fa
+cat *.fa > Leca117T_proteins.fa
 
 #make into blastdb
 makeblastdb \
--in Leca118T_proteins.fa \
--out Leca118caT \
+-in Leca117T_proteins.fa \
+-out Leca117caT \
 -parse_seqids \
 -dbtype prot
 
@@ -20,14 +20,14 @@ QUERY=Hsp90_Anidulans.fasta
 blastp \
 -num_threads 8 \
 -query queries/${QUERY} \
--db blastdb/Leca118T \
+-db blastdb/Leca117T \
 -outfmt "6 sseqid pident qcovs length mismatch gapopen qstart qend sstart send evalue bitscore sseq" \
 -evalue 1 \
--out Hsp90.vs.Leca118T.blastp.out
+-out Hsp90.vs.Leca117T.blastp.out
 
 #filter to get matches >35% pident and 40% cov
-cat Hsp90.vs.Leca118T.blastp.out | awk '$2>=35 && $3>=40' > Hsp90.vs.Leca118T.blastp.out.filtered
+cat Hsp90.vs.Leca117T.blastp.out | awk '$2>=35 && $3>=40' > Hsp90.vs.Leca117T.blastp.out.filtered
 
 # extract fastas
-cut -f 1 Hsp90.vs.Leca118T.blastp.out.filtered | uniq > Hsp90_headers.txt
-cat blastdb/Leca118T_proteins.fa | seqkit grep -f Hsp90_headers.txt > Hsp90_Leca118T.fa
+cut -f 1 Hsp90.vs.Leca117T.blastp.out.filtered | uniq > Hsp90_headers.txt
+cat blastdb/Leca117T_proteins.fa | seqkit grep -f Hsp90_headers.txt > Hsp90_Leca117T.fa
